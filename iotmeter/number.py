@@ -12,21 +12,11 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
     """Set up IoTMeter number entities from a config entry."""
-    #config_entry.entry_id = f"number_{config_entry.entry_id}"
     coordinator = hass.data[DOMAIN]["coordinator"]
     coordinator.async_add_number_entities = async_add_entities  # Store the function in the coordinator
     hass.data[DOMAIN]["platform"] = async_add_entities
     _LOGGER.debug("async_add_entities set in coordinator")
-
     await coordinator.async_request_refresh()
-    '''
-    coordinator = hass.data[DOMAIN]["coordinator"]
-    translations = await async_get_translations(hass, hass.config.language, "entity")
-    entities = [
-        ChargingCurrentNumber(coordinator, "Charging current", translations, "A", 0, 32, 1)
-    ]
-    async_add_entities(entities, update_before_add=True)
-    '''
 
 
 class ChargingCurrentNumber(TranslatableSensorEntity, NumberEntity):
@@ -79,11 +69,11 @@ class ChargingCurrentNumber(TranslatableSensorEntity, NumberEntity):
         device: str = "Smartmodule" if self._smartmodule else "IoTMeter"
         return DeviceInfo(
             identifiers={(DOMAIN, self._attr_unique_id)},
-            name=device,
+            name="iotmeter",
             manufacturer="Vilmio",
             model=device,
             sw_version=self._fw_version,
-            via_device=(DOMAIN, device.lower())
+            via_device=(DOMAIN, "iotmeter")
         )
 
     @property
