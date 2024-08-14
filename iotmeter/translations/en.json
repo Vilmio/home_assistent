@@ -30,10 +30,10 @@
   },
   "entity": {
     "sensor": {
-      "evse": "EV nabíječka",
-      "total_consumption_energy": "Celková spotřeba energie",
-      "total_generation_energy": "Celková výroba energie",
-      "total_power": "Celkový výkon"
+      "evse": "EV Charger",
+      "total_consumption_energy": "Total Energy Consumption",
+      "total_generation_energy": "Total Energy Generation",
+      "total_power": "Total Power"
     }
   }
 }
